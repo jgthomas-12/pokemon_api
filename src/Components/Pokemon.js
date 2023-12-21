@@ -4,17 +4,23 @@ import axios from "axios";
 
 const Pokemon = () => {
   const [num, setnum] = useState();
+  const [name, setname] = useState();
+  const [moves, setmoves] = useState();
+
   useEffect(() => {
     async function getData() {
       const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${num}`);
-      console.log(res.data.name);
+      setname(res.data.name);
+      setmoves(res.data.moves.length);
     }
     getData();
   });
 
   return (
     <>
-      <h1>You choose {num}!</h1>
+      <h1>You choose <span style={{ color: "red" }}>{num}</span>!</h1>
+      <h1>Your pokemon is <span style={{ color: "red" }}>{name}</span>!</h1>
+      <h1>I have <span style={{ color: "red" }}>{moves}</span> moves!</h1>
       <select
         name="" id=""
         value={num}
@@ -22,11 +28,11 @@ const Pokemon = () => {
           setnum(event.target.value);
         }}
       >
-        <option value="1"> 1</option>
-        <option value="2"> 2</option>
-        <option value="3"> 3</option>
-        <option value="4"> 4</option>
-        <option value="5"> 5</option>
+        {Array.from({ length: 1000 }, (_, index) => index +1).map((option) =>
+        <option key={option} value={option}>
+          {option}
+        </option>
+        )}
       </select>
     </>
   )
