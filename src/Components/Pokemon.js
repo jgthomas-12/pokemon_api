@@ -1,8 +1,17 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Pokemon = () => {
   const [num, setnum] = useState();
+  useEffect(() => {
+    async function getData() {
+      const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${num}`);
+      console.log(res.data.name);
+    }
+    getData();
+  });
+
   return (
     <>
       <h1>You choose {num}!</h1>
